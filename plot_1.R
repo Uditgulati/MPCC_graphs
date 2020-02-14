@@ -2,7 +2,7 @@ library(MPCC)
 library(MPCCmkl)
 library(rbenchmark)
 cols <- c("test", "replications", "elapsed", "relative")
-reps <- 20
+reps <- 3
 set.seed(1)
 
 sizes = c(100, 500, 1000, 2000, 4000, 8000)
@@ -12,6 +12,8 @@ PCC_vals = c()
 naive_vals = c()
 
 ymax = 0
+
+df<-data.frame()
 
 for (i in 1:length(sizes)) {
   m <- sizes[i]
@@ -31,8 +33,21 @@ for (i in 1:length(sizes)) {
   PCC_vals[i] = c[1, 3]
   naive_vals[i] = d[1, 3]
 
+  entry<-data.frame(m, n, cor_vals[i], mkl_vals[i], PCC_vals[i], naive_vals[i], reps)
+
+  if(nrow(df) == 0) {
+    df <- entry
+  }
+  else {
+    df <- rbind(df, entry)
+  }  
+
   ymax = max(ymax, cor_vals[i], mkl_vals[i], PCC_vals[i], naive_vals[i])
 }
+
+names(df) = c("m", "n", "cor", "mkl", "openblas", "naive", "replications")
+
+write.csv(df, row.names = FALSE, "out_1.csv")
 
 png("plot_1.png", width=1024, height = 800)
  
