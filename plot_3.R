@@ -1,7 +1,7 @@
 library(MPCC)
 library(rbenchmark)
 cols <- c("test", "replications", "elapsed", "relative")
-reps <- 20
+reps <- 3
 set.seed(1)
 
 sizes = c(100, 500, 1000, 2000, 4000, 8000)
@@ -9,6 +9,8 @@ one_vals = c()
 two_vals = c()
 
 ymax = 0
+
+df<-data.frame()
 
 for (i in 1:length(sizes)) {
   m <- sizes[i]
@@ -23,8 +25,21 @@ for (i in 1:length(sizes)) {
   one_vals[i] = a[1, 3]
   two_vals[i] = b[1, 3]
 
+  entry<-data.frame(m, n, one_vals[i], two_vals[i], reps)
+
+  if(nrow(df) == 0) {
+    df <- entry
+  }
+  else {
+    df <- rbind(df, entry)
+  } 
+
   ymax = max(ymax, one_vals[i], two_vals[i])
 }
+
+names(df) = c("m", "n", "one_input", "two_inputs", "replications")
+
+write.csv(df, row.names = FALSE, "out_3.csv")
 
 png("plot_3.png", width=1024, height = 800)
  
