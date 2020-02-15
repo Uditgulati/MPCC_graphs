@@ -39,7 +39,10 @@ for (i in 1:length(sizes)) {
 
 names(df) = c("m", "n", "one_input", "two_inputs", "replications")
 
-write.csv(df, row.names = FALSE, "out_3.csv")
+args <- commandArgs()
+filename <- paste(args[length(args)], ".csv", sep="")
+
+write.csv(df, row.names = FALSE, filename)
 
 png("plot_3.png", width=1024, height = 800)
  
