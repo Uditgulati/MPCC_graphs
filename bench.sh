@@ -1,5 +1,7 @@
 # plot 1
 
+echo "plot 1 starting...."
+
 Rscript plot_1.R data_1_0
 Rscript plot_1.R data_1_1
 Rscript plot_1.R data_1_2
@@ -12,6 +14,8 @@ Rscript plot_1.R data_1_8
 Rscript plot_1.R data_1_9
 
 # plot 2
+
+echo "plot 2 starting...."
 
 Rscript plot_2.R data_2_0
 Rscript plot_2.R data_2_1
@@ -26,6 +30,8 @@ Rscript plot_2.R data_2_9
 
 # plot 3
 
+echo "plot 3 starting...."
+
 Rscript plot_3.R data_3_0
 Rscript plot_3.R data_3_1
 Rscript plot_3.R data_3_2
@@ -39,6 +45,8 @@ Rscript plot_3.R data_3_9
 
 # plot rec 1
 
+echo "plot 4 starting...."
+
 Rscript plot_rec_1.R data_rec_1_0
 Rscript plot_rec_1.R data_rec_1_1
 Rscript plot_rec_1.R data_rec_1_2
@@ -51,6 +59,8 @@ Rscript plot_rec_1.R data_rec_1_8
 Rscript plot_rec_1.R data_rec_1_9
 
 # plot rec 2
+
+echo "plot 4 starting...."
 
 Rscript plot_rec_2.R data_rec_2_0
 Rscript plot_rec_2.R data_rec_2_1
