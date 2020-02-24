@@ -2,7 +2,7 @@ library(MPCC)
 library(MPCCmkl)
 library(rbenchmark)
 cols <- c("test", "replications", "elapsed", "relative")
-reps <- 3
+reps <- 20
 set.seed(1)
 
 size = 2000
@@ -22,6 +22,13 @@ for (i in 1:length(sizes)) {
   x <- matrix(rnorm(m*n), m, n)
   y <- matrix(rnorm(m*n), m, n)
 
+  if(sizes[i] == 4000) {
+    reps <- 4
+  }
+  if(sizes[i] == 8000) {
+    reps <- 2
+  }
+
   x[sample(m*n, (m * n * missing[i]))] <- NA
   y[sample(m*n, (m * n * missing[i]))] <- NA
 
@@ -32,12 +39,12 @@ for (i in 1:length(sizes)) {
   d = benchmark(PCC.naive(x, y), replications=reps, columns=cols)
 
   print(i)
-  cor_vals[i] = a[1, 3]
-  mkl_vals[i] = b[1, 3]
-  PCC_vals[i] = c[1, 3]
-  naive_vals[i] = d[1, 3]
+  cor_vals[i] = (a[1, 3] / reps)
+  mkl_vals[i] = (b[1, 3] / reps)
+  PCC_vals[i] = (c[1, 3] / reps)
+  naive_vals[i] = (d[1, 3] / reps)
 
-  entry<-data.frame(m, n, missing[i], cor_vals[i], mkl_vals[i], PCC_vals[i], naive_vals[i], reps)
+  entry<-data.frame(m, n, missing[i], cor_vals[i], mkl_vals[i], PCC_vals[i], naive_vals[i])
 
   if(nrow(df) == 0) {
     df <- entry
@@ -49,7 +56,7 @@ for (i in 1:length(sizes)) {
   ymax = max(ymax, cor_vals[i], mkl_vals[i], PCC_vals[i], naive_vals[i])
 }
 
-names(df) = c("m", "n", "missing", "cor", "mkl", "openblas", "naive", "replications")
+names(df) = c("m", "n", "missing", "cor", "mkl", "openblas", "naive")
 
 args <- commandArgs()
 filename <- paste(args[length(args)], ".csv", sep="")

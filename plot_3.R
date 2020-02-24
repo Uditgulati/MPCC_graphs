@@ -1,7 +1,7 @@
 library(MPCC)
 library(rbenchmark)
 cols <- c("test", "replications", "elapsed", "relative")
-reps <- 3
+reps <- 20
 set.seed(1)
 
 sizes = c(100, 500, 1000, 2000, 4000, 8000)
@@ -17,15 +17,22 @@ for (i in 1:length(sizes)) {
   n <- sizes[i]
   x <- matrix(rnorm(m*n), m, n)
 
+  if(sizes[i] == 4000) {
+    reps <- 4
+  }
+  if(sizes[i] == 8000) {
+    reps <- 2
+  }
+
   print(i)
   a = benchmark(PCC(x), replications=reps, columns=cols)
   b = benchmark(PCC(x, x), replications=reps, columns=cols)
 
   print(i)
-  one_vals[i] = a[1, 3]
-  two_vals[i] = b[1, 3]
+  one_vals[i] = (a[1, 3] / reps)
+  two_vals[i] = (b[1, 3] / reps)
 
-  entry<-data.frame(m, n, one_vals[i], two_vals[i], reps)
+  entry<-data.frame(m, n, one_vals[i], two_vals[i])
 
   if(nrow(df) == 0) {
     df <- entry
@@ -37,7 +44,7 @@ for (i in 1:length(sizes)) {
   ymax = max(ymax, one_vals[i], two_vals[i])
 }
 
-names(df) = c("m", "n", "one_input", "two_inputs", "replications")
+names(df) = c("m", "n", "one_input", "two_inputs")
 
 args <- commandArgs()
 filename <- paste(args[length(args)], ".csv", sep="")
