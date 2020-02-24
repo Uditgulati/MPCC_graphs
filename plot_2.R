@@ -2,7 +2,7 @@ library(MPCC)
 library(MPCCmkl)
 library(rbenchmark)
 cols <- c("test", "replications", "elapsed", "relative")
-reps <- 20
+reps <- 10
 set.seed(1)
 
 size = 2000
@@ -16,18 +16,11 @@ ymax = 0
 
 df<-data.frame()
 
-for (i in 1:length(sizes)) {
+for (i in 1:length(missing)) {
   m <- size
   n <- size
   x <- matrix(rnorm(m*n), m, n)
   y <- matrix(rnorm(m*n), m, n)
-
-  if(sizes[i] == 4000) {
-    reps <- 4
-  }
-  if(sizes[i] == 8000) {
-    reps <- 2
-  }
 
   x[sample(m*n, (m * n * missing[i]))] <- NA
   y[sample(m*n, (m * n * missing[i]))] <- NA
