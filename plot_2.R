@@ -2,7 +2,7 @@ library(MPCC)
 library(MPCCmkl)
 library(rbenchmark)
 cols <- c("test", "replications", "elapsed", "relative")
-reps <- 10
+reps <- 4
 set.seed(1)
 
 size = 2000
@@ -26,7 +26,7 @@ for (i in 1:length(missing)) {
   y[sample(m*n, (m * n * missing[i]))] <- NA
 
   print(i)
-  a = benchmark(cor(x, y), replications=reps, columns=cols)
+  a = benchmark(cor(x, y, use="pair"), replications=reps, columns=cols)
   b = benchmark(MPCCmkl::PCC(x, y), replications=reps, columns=cols)
   c = benchmark(MPCC::PCC(x, y), replications=reps, columns=cols)
   d = benchmark(PCC.naive(x, y), replications=reps, columns=cols)
