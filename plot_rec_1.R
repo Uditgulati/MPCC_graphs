@@ -59,7 +59,7 @@ filename <- paste(args[length(args)], ".csv", sep="")
 
 write.csv(df, row.names = FALSE, filename)
 
-png("plot_1.png", width=1024, height = 800)
+png("plot_rec_1.png", width=1024, height = 800)
  
 # Make a basic graph
 plot( cor_vals~sizes , type="b" , bty="l" , xlab="Matrix size" , ylab="Time(seconds)" , col=rgb(0.9,0.1,0.1,0.7) , lwd=3 , pch=17, ylim = c(0, ymax))
