@@ -59,10 +59,10 @@ write.csv(df, row.names = FALSE, filename)
 png("plot_2.png", width=1024, height = 800)
  
 # Make a basic graph
-plot( cor_vals~sizes , type="b" , bty="l" , xlab="Matrix size" , ylab="Time(seconds)" , col=rgb(0.9,0.1,0.1,0.7) , lwd=3 , pch=17, ylim = c(0, ymax))
-lines( mkl_vals~sizes , col=rgb(0.1,0.9,0.1,0.7) , lwd=3 , pch=18 , type="b" )
-lines( PCC_vals~sizes , col=rgb(0.1,0.1,0.9,0.7) , lwd=3 , pch=19 , type="b" )
-lines( naive_vals~sizes , col=rgb(0.3,0.3,0.3,0.7) , lwd=3 , pch=20 , type="b" )
+plot( cor_vals~missing , type="b" , bty="l" , xlab="Missing percentage" , ylab="Time(seconds)" , col=rgb(0.9,0.1,0.1,0.7) , lwd=3 , pch=17, ylim = c(0, ymax))
+lines( mkl_vals~missing , col=rgb(0.1,0.9,0.1,0.7) , lwd=3 , pch=18 , type="b" )
+lines( PCC_vals~missing , col=rgb(0.1,0.1,0.9,0.7) , lwd=3 , pch=19 , type="b" )
+lines( naive_vals~missing , col=rgb(0.3,0.3,0.3,0.7) , lwd=3 , pch=20 , type="b" )
  
 # Add a legend
 legend("bottomleft", 
